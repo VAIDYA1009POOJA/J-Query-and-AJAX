@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Task Tracker</title>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="Index.css">
+</head>
+    <body onload="myfunc()">
+        <div id="body">
+        <div id="top">
+            <h2>Task Tracker</h2>
+            <h6>v2.0</h6>
+            </div>
+        <div id="bottom">
+            <div id="left">
+                <h3>Create a Task</h3>
+                <div id="form">
+                    <h4>Task Name:</h4>
+                    <input type="text" id="taskname" >
+                    <h4>Date:</h4>
+                    <input type="text" id="date" >
+                    <h4>Assigned to:</h4>
+                    <input type="text" id="assignedto" >
+                    <br/><br/><input type="submit" id="submit" onclick="add()">
+                </div>
+            </div>
+            <div id="right">
+                <h3>Existing Task</h3>
+                <div id="data">
+                    
+                <table id="table1">
+                </table>
+                </div>
+                
+            </div>
+            </div>
+        
+        
+        </div>
+        
+        <script>
+            
+            
+            function myfunc(){
+        $.ajax({
+                type: "GET" ,
+                url : "data.json" ,
+                dataType : "json" ,
+                success : function(data){
+                      console.log(data);
+                   
+                      //  $("#table1").append("<tr>\n");
+                      
+                        $.each(data, function(name, value){
+                            $("#table1").append("<tr>"+"<td>" + value.name + "</td>"+"<td>" + value.date + "</td>"+"<td>" + value.assigned + "</td>"+"</tr>");
+                        });
+                       // $("#table1").append("</tr>\n");
+                   
+                }
+           
+                
+            })
+            }
+            
+            function add(){
+                 var tab = $("#table1 > tr");
+                var count = tab.length ;
+                if(count > 8){
+                    $("#table1 tr:last").remove();
+                }
+                var a = $("#taskname").val();
+                var b = $("#date").val() ;
+                var c = $("#assignedto").val() ;
+                $("#table1").prepend("<tr><td>"+a+"</td><td>"+b+"</td><td>"+c+"</td></tr>");
+               
+            }
+          
+       
+           
+      
+        
+        
+        </script>
+    </body>
+</html>
